@@ -2,6 +2,9 @@ buildscript {
     ext {
         compose_version = '1.1.1'
         mediaVersion = "1.0.0-beta03"
+        koin_version= "3.3.0"
+        koin_android_version= "3.3.1"
+        koin_android_compose_version= "3.4.0"
 
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
