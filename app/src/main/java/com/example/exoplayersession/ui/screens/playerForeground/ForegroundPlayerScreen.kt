@@ -8,10 +8,12 @@ import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
 import com.example.exoplayersession.ui.screens.playerForeground.components.PlayerView
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ForegroundPlayerScreen(
-    viewModel: ForegroundPlayerViewModel
+    viewModel: ForegroundPlayerViewModel = getViewModel()
+
 ) {
     ScreenContent(viewModel.player)
 }

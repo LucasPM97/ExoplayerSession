@@ -6,6 +6,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 
 val viewModelModule = module {
     viewModel {
-        ForegroundPlayerViewModel()
+        ForegroundPlayerViewModel(get())
     }
 }
