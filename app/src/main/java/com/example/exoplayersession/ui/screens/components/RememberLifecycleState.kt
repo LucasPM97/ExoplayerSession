@@ -1,8 +1,9 @@
-package com.example.exoplayersession.ui.screens.player.components
+package com.example.exoplayersession.ui.screens.playerForeground.components
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 
 @Composable
 fun rememberLifecycleState(): MutableState<Lifecycle.Event> {
