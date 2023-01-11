@@ -1,4 +1,4 @@
-package com.example.exoplayersession.ui.screens.player.components
+package com.example.exoplayersession.ui.screens.playerForeground.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,37 +15,43 @@ import androidx.media3.ui.PlayerView
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
 
 @Composable
-fun Player(
+fun PlayerView(
     player: Player?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    stopOnBackground: Boolean = false
 ) {
-
     // Just for Preview purposes
     if (player == null) {
-        Box(
-            modifier = modifier
-                .background(Color.Black)
-        )
+        RenderLoading(modifier = modifier)
         return
     }
 
     val lifecycle by rememberLifecycleState()
 
-    AndroidView(
-        factory = { context ->
-            PlayerView(context).also {
-                it.player = player
-            }
-        },
-        update = {
-            when (lifecycle) {
-                Lifecycle.Event.ON_PAUSE -> {
+    AndroidView(factory = { context ->
+        PlayerView(context).also {
+            it.player = player
+        }
+    }, update = {
+        when (lifecycle) {
+            Lifecycle.Event.ON_PAUSE -> {
+                if (stopOnBackground) {
                     it.onPause()
                     it.player?.pause()
                 }
+                player.release()
             }
-        },
-        modifier = modifier
+        }
+    }, modifier = modifier
+    )
+
+}
+
+
+@Composable
+private fun RenderLoading(modifier: Modifier) {
+    Box(
+        modifier = modifier.background(Color.Black)
     )
 }
 
@@ -53,7 +59,7 @@ fun Player(
 @Composable
 private fun PreviewPlayerNull() {
     ExoPlayerSessionTheme {
-        Player(
+        PlayerView(
             player = null,
             modifier = Modifier
                 .fillMaxWidth()
