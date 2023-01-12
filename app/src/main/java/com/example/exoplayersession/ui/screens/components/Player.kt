@@ -1,15 +1,14 @@
-package com.example.exoplayersession.ui.screens.playerForeground.components
+package com.example.exoplayersession.ui.screens.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.Lifecycle
 import androidx.media3.common.Player
 import androidx.media3.ui.PlayerView
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
@@ -18,7 +17,7 @@ import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
 fun PlayerView(
     player: Player?,
     modifier: Modifier = Modifier,
-    stopOnBackground: Boolean = false
+    update: (PlayerView) -> Unit = {}
 ) {
     // Just for Preview purposes
     if (player == null) {
@@ -26,23 +25,14 @@ fun PlayerView(
         return
     }
 
-    val lifecycle by rememberLifecycleState()
-
-    AndroidView(factory = { context ->
-        PlayerView(context).also {
-            it.player = player
-        }
-    }, update = {
-        when (lifecycle) {
-            Lifecycle.Event.ON_PAUSE -> {
-                if (stopOnBackground) {
-                    it.onPause()
-                    it.player?.pause()
-                }
-                player.release()
+    AndroidView(
+        factory = { context ->
+            PlayerView(context).also {
+                it.player = player
             }
-        }
-    }, modifier = modifier
+        },
+        update = update,
+        modifier = modifier
     )
 
 }
