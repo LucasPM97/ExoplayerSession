@@ -1,6 +1,7 @@
-package com.example.exoplayersession.ui.screens.playerForeground.components
+package com.example.exoplayersession.ui.screens.components
 
 import android.content.ComponentName
+import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.media3.session.MediaController
@@ -16,17 +17,23 @@ fun rememberMediaControllerState(): MutableState<MediaController?> {
     }
 
     LaunchedEffect(true) {
-        context.run {
-            val sessionToken =
-                SessionToken(this, ComponentName(this, MusicService::class.java))
-
-            val controllerFuture = MediaController.Builder(
-                this,
-                sessionToken
-            ).buildAsync()
-            mediaControllerState.value = controllerFuture.await()
-        }
+        mediaControllerState.value = getMediaController(context)
     }
 
     return mediaControllerState
 }
+
+private suspend fun getMediaController(context: Context): MediaController? {
+    return context.run {
+        val sessionToken =
+            SessionToken(this, ComponentName(this, MusicService::class.java))
+
+        val controllerFuture = MediaController.Builder(
+            this,
+            sessionToken
+        ).buildAsync()
+
+        controllerFuture.await()
+    }
+}
+
