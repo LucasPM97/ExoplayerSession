@@ -6,14 +6,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.exoplayersession.ui.screens.components.rememberMediaControllerState
 import com.example.exoplayersession.ui.screens.playerForeground.components.PlayerView
-import com.example.exoplayersession.ui.screens.playerForeground.components.rememberMediaControllerState
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
 
 @Composable
 fun BackgroundPlayerScreen() {
 
     val mediaController by rememberMediaControllerState()
+
 
     Column(
         modifier = Modifier
