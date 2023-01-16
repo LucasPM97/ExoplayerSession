@@ -1,4 +1,4 @@
-package com.example.exoplayersession.ui.screens.playerForeground.components
+package com.example.exoplayersession.ui.screens.components
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
