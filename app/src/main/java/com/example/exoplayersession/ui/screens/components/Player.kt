@@ -13,10 +13,12 @@ import androidx.media3.common.Player
 import androidx.media3.ui.PlayerView
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
 
+@androidx.media3.common.util.UnstableApi
 @Composable
 fun PlayerView(
     player: Player?,
     modifier: Modifier = Modifier,
+    controllerAutoShow: Boolean = true,
     update: (PlayerView) -> Unit = {}
 ) {
     // Just for Preview purposes
@@ -29,6 +31,7 @@ fun PlayerView(
         factory = { context ->
             PlayerView(context).also {
                 it.player = player
+                it.controllerAutoShow = controllerAutoShow
             }
         },
         update = update,
