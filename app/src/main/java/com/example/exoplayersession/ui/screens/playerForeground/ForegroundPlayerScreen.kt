@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.media3.common.Player
 import com.example.exoplayersession.ui.screens.components.PlayerView
-import com.example.exoplayersession.ui.screens.playerForeground.components.rememberLifecycleState
+import com.example.exoplayersession.ui.screens.components.rememberLifecycleState
 import com.example.exoplayersession.ui.theme.ExoPlayerSessionTheme
 import org.koin.androidx.compose.getViewModel
 
