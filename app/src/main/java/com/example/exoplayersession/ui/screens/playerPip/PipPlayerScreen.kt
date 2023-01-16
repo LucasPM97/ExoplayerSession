@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.lifecycle.Lifecycle
-import androidx.media3.session.MediaController
 import com.example.exoplayersession.ui.screens.components.*
 import com.example.exoplayersession.ui.screens.playerPip.components.PictureInPictureButton
+import com.example.exoplayersession.ui.screens.playerPip.components.PipPlayer
 
 @Composable
 fun PipPlayerScreen(
@@ -20,6 +20,8 @@ fun PipPlayerScreen(
     onGloballyPositioned: (LayoutCoordinates) -> Unit = {}
 ) {
 
+    // This is just used to trigger the Player controller's Show and Hide methods, and it backs to None after changed
+    // This value will not change after a UI interaction
     var playerControllerVisibility by rememberSaveable {
         mutableStateOf(PlayerControllerVisibility.None)
     }
@@ -64,34 +66,6 @@ fun PipPlayerScreen(
             }
         )
     }
-}
-
-@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-@Composable
-private fun PipPlayer(
-    modifier: Modifier,
-    mediaController: MediaController?,
-    playerControlsVisibility: PlayerControllerVisibility,
-    updatePlayerControlsVisibility: (PlayerControllerVisibility) -> Unit
-
-) {
-
-    PlayerView(
-        player = mediaController,
-        modifier = modifier,
-        controllerAutoShow = false,
-        update = {
-            when (playerControlsVisibility) {
-                PlayerControllerVisibility.Show -> it.showController()
-                PlayerControllerVisibility.Hide -> it.hideController()
-            }
-            if (playerControlsVisibility != PlayerControllerVisibility.None) {
-                updatePlayerControlsVisibility(PlayerControllerVisibility.None)
-            }
-        },
-
-
-        )
 }
 
 enum class PlayerControllerVisibility {
