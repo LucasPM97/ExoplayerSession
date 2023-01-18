@@ -1,4 +1,4 @@
-package com.example.exoplayersession
+package com.example.exoplayersession.data
 
 import android.content.ComponentName
 import android.content.Context
