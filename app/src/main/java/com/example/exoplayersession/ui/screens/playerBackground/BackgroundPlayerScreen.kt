@@ -24,6 +24,7 @@ fun BackgroundPlayerScreen() {
             Lifecycle.Event.ON_PAUSE -> {
                 mediaController?.release()
             }
+            else -> {}
         }
     }
 
