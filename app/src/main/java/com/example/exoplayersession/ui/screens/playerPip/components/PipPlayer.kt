@@ -23,6 +23,7 @@ fun PipPlayer(
             when (playerControlsVisibility) {
                 PlayerControllerVisibility.Show -> it.showController()
                 PlayerControllerVisibility.Hide -> it.hideController()
+                else -> {}
             }
             if (playerControlsVisibility != PlayerControllerVisibility.None) {
                 updatePlayerControlsVisibility(PlayerControllerVisibility.None)

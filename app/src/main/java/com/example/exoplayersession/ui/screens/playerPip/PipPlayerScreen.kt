@@ -33,6 +33,7 @@ fun PipPlayerScreen(
             PlayerStates.Ended -> {
                 playerControllerVisibility = PlayerControllerVisibility.Show
             }
+            else -> {}
         }
     }
 
@@ -41,6 +42,7 @@ fun PipPlayerScreen(
         when (lifecycle) {
             Lifecycle.Event.ON_PAUSE -> playerControllerVisibility =
                 PlayerControllerVisibility.Hide
+            else -> {}
         }
     }
 

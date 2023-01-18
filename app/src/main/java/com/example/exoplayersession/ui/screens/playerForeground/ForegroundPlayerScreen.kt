@@ -40,6 +40,7 @@ fun ScreenContent(
                         it.onPause()
                         it.player?.pause()
                     }
+                    else -> {}
                 }
             },
             modifier = Modifier
