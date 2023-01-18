@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExoPlayerSession"
         tools:targetApi="31">
-        <receiver android:name=".PipPlayerActivity$MyReceiver" />
+        <receiver android:name=".data.PipBroadcastReceiver" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ExoPlayerSession">
             <intent-filter>
@@ -33,14 +33,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".PipPlayerActivity"
+            android:name=".ui.PipPlayerActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:exported="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/Theme.ExoPlayerSession" />
 
         <service
-            android:name=".MusicService"
+            android:name=".data.MusicService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
