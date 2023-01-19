@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ExoPlayerSession</string>
+    <string name="pip_pause_title">Pause video</string>
+    <string name="pip_pause_description">Pause video</string>
+    <string name="pip_play_title">Play video</string>
+    <string name="pip_play_description">Play video</string>
 </resources>
