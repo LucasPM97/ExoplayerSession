@@ -14,7 +14,6 @@ fun PipPlayer(
     playerControlsVisibility: PlayerControllerVisibility,
     updatePlayerControlsVisibility: (PlayerControllerVisibility) -> Unit
 ) {
-
     PlayerView(
         player = mediaController,
         modifier = modifier,
