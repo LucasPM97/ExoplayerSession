@@ -3,6 +3,7 @@ package com.example.exoplayersession.ui.screens.playerPip.components
 import android.app.Activity
 import android.app.PictureInPictureParams
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.util.Rational
@@ -42,7 +43,14 @@ fun PictureInPictureButton(
         updatePipParams(context, videoViewBounds, isPlaying)?.let { params ->
             context.enterPictureInPictureMode(params)
         }
+    }
 
+    LaunchedEffect(isPlaying) {
+        if (context is Activity) {
+            context.setPictureInPictureParams(
+                updatePipParams(context, videoViewBounds, isPlaying)
+            )
+        }
     }
 
 
@@ -71,7 +79,8 @@ private fun updatePipParams(
     context: Context,
     videoViewBounds: Rect,
     isPlaying: Boolean
-): PictureInPictureParams? {
+): PictureInPictureParams {
+
     return PictureInPictureParams.Builder()
         .setSourceRectHint(videoViewBounds)
         .setAspectRatio(Rational(16, 9))
