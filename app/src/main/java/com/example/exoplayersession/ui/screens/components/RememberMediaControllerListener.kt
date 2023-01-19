@@ -1,21 +1,34 @@
 package com.example.exoplayersession.ui.screens.components
 
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.media3.common.Player
 
-
 @Composable
-fun rememberMediaControllerState(player: Player?): MutableState<PlayerStates> {
-    val mediaControllerState = rememberSaveable {
-        mutableStateOf(PlayerStates.Idle)
+fun rememberMediaControllerState(player: Player?): MutableState<PlayerState> {
+    val mediaControllerState = remember {
+        mutableStateOf(
+            PlayerState(
+                isPlaying = false,
+                state = PlayerStates.Idle
+            )
+        )
     }
 
     DisposableEffect(player) {
+
         val observer = object : Player.Listener {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 super.onPlaybackStateChanged(playbackState)
-                mediaControllerState.value = mapPlayerStateToEnum(playbackState)
+                mediaControllerState.value = mediaControllerState.value.copy(
+                    state = mapPlayerStateToEnum(playbackState)
+                )
+            }
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                super.onIsPlayingChanged(isPlaying)
+                mediaControllerState.value = mediaControllerState.value.copy(
+                    isPlaying = isPlaying
+                )
             }
         }
         player?.addListener(observer)
@@ -28,6 +41,11 @@ fun rememberMediaControllerState(player: Player?): MutableState<PlayerStates> {
 
     return mediaControllerState
 }
+
+data class PlayerState(
+    val state: PlayerStates,
+    val isPlaying: Boolean
+)
 
 private fun mapPlayerStateToEnum(state: Int): PlayerStates {
     return when (state) {
