@@ -1,8 +1,11 @@
 package com.example.exoplayersession.ui.screens.playerPip.components
 
 import android.app.Activity
+import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Rect
+import android.util.Rational
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -14,13 +17,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.exoplayersession.R
 import androidx.compose.runtime.*
+import com.example.exoplayersession.data.PipBroadcastReceiver
 
 
 @Composable
 fun PictureInPictureButton(
-    modifier: Modifier,
-    onClick: () -> Unit,
+    isPlaying: Boolean,
+    videoViewBounds: Rect,
+    modifier: Modifier = Modifier
 ) {
+
     val context = LocalContext.current
     val isPipSupported by rememberSaveable {
         mutableStateOf(
@@ -30,9 +36,19 @@ fun PictureInPictureButton(
 
     if (!isPipSupported) return
 
+    fun handleOnClick() {
+        if (context !is Activity) return
+
+        updatePipParams(context, videoViewBounds, isPlaying)?.let { params ->
+            context.enterPictureInPictureMode(params)
+        }
+
+    }
+
+
     IconButton(
         modifier = modifier,
-        onClick = onClick
+        onClick = { handleOnClick() }
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_baseline_picture_in_picture_white_24),
@@ -49,4 +65,20 @@ private fun supportsPictureInPicture(context: Context): Boolean {
             PackageManager.FEATURE_PICTURE_IN_PICTURE
         )
     }
+}
+
+private fun updatePipParams(
+    context: Context,
+    videoViewBounds: Rect,
+    isPlaying: Boolean
+): PictureInPictureParams? {
+    return PictureInPictureParams.Builder()
+        .setSourceRectHint(videoViewBounds)
+        .setAspectRatio(Rational(16, 9))
+        .setActions(
+            PipBroadcastReceiver.getPipActions(
+                context,
+                isPlaying
+            )
+        ).build()
 }
